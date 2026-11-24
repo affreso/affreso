@@ -1,0 +1,2 @@
+<div class="page-head"><div><h1><?= e(__('Reports & insights')) ?></h1><p><?= e(__('Participation, compliance and planning. Every report can be exported to CSV.')) ?></p></div></div>
+<div class="grid-3"><?php foreach ($cat as $k => [$t, $d]): ?><a class="card stat" href="<?= e(url('/reports/' . $k)) ?>"><h2 class="h3" style="margin-top:0"><?= e($t) ?></h2><p class="small muted"><?= e($d) ?></p></a><?php endforeach; ?></div>

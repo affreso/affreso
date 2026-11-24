@@ -1,0 +1,3 @@
+<div class="page-head"><div><div class="breadcrumb"><a href="<?= e(url('/comms')) ?>"><?= e(__('Communications')) ?></a></div><h1><?= e($title) ?> <?= badge($m['status']) ?></h1><p><?= e(strtoupper($m['channel'])) ?> · <?= e($m['audience']) ?> · <?= e(fmt_datetime($m['created_at'])) ?></p></div></div>
+<div class="split"><div class="card"><div class="lesson-body"><?= e($m['body']) ?></div></div>
+<div class="card table-wrap"><h2 class="h3"><?= e(__('Recipients')) ?></h2><table><tbody><?php foreach ($rec as $r): ?><tr><td><?= e(person_name($r)) ?></td><td class="small"><?= e($r['address']) ?></td><td><?= badge($r['status']) ?><?= $r['error'] ? '<div class="small muted">' . e($r['error']) . '</div>' : '' ?></td></tr><?php endforeach; ?></tbody></table></div></div>

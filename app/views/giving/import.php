@@ -1,0 +1,10 @@
+<div class="page-head"><div><div class="breadcrumb"><a href="<?= e(url('/giving')) ?>"><?= e(__('Giving')) ?></a></div><h1><?= e(__('Import bank deposits')) ?></h1><p><?= e(__('Upload a CSV export from your online banking. Deposits are matched to people by giving number (e.g. G123 in the description) or by name.')) ?></p></div></div>
+<form method="post" action="<?= e(url('/giving/import')) ?>" enctype="multipart/form-data" class="card form-row"><?= csrf_field() ?><label><?= e(__('Bank CSV')) ?><input type="file" name="csv" accept=".csv,text/csv" required></label><button class="btn btn-primary"><?= e(__('Read file')) ?></button></form>
+<?php if ($rows): ?>
+<form method="post" action="<?= e(url('/giving/import/confirm')) ?>" class="card table-wrap"><?= csrf_field() ?>
+<div class="form-row"><label><?= e(__('Record against fund')) ?><select name="fund_id"><?= options($funds) ?></select></label></div>
+<table><thead><tr><th><?= e(__('Import')) ?></th><th><?= e(__('Date')) ?></th><th><?= e(__('Amount')) ?></th><th><?= e(__('Description')) ?></th><th><?= e(__('Donor')) ?></th></tr></thead><tbody>
+<?php foreach ($rows as $i => $r): ?><tr><td><input type="checkbox" name="take[<?= $i ?>]" value="1" <?= $r['dupe'] ? 'disabled' : 'checked' ?> aria-label="<?= e(__('Import this deposit')) ?>"><?= $r['dupe'] ? ' <span class="badge badge-grey">' . e(__('already imported')) . '</span>' : '' ?></td><td class="small"><?= e(fmt_date($r['date'])) ?></td><td><?= e(fmt_money($r['cents'])) ?></td><td class="small"><?= e($r['desc']) ?></td><td><select name="person[<?= $i ?>]" aria-label="<?= e(__('Donor')) ?>"><?= options($people, $r['person_id'], __('— Unknown / anonymous —')) ?></select></td></tr><?php endforeach; ?>
+</tbody></table><p><button class="btn btn-primary"><?= e(__('Import selected deposits')) ?></button></p></form>
+<?php endif; ?>
+<p class="small muted"><?= e(__('Tip: give each regular giver their giving number (shown on their profile) to use as the payment description, so deposits match automatically.')) ?></p>

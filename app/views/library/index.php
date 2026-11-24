@@ -1,0 +1,11 @@
+<div class="page-head"><div><h1><?= e(__('Resource library')) ?></h1><p><?= e(__('Handbooks, policies, study materials and procedures.')) ?></p></div>
+<?php if (can('library.manage')): ?><a class="btn btn-primary" href="<?= e(url('/library/new')) ?>">+ <?= e(__('Add a document')) ?></a><?php endif; ?></div>
+<?php if ($todo): ?><div class="card" style="border-left:4px solid var(--gold)"><h2><?= e(__('Please read and sign')) ?></h2><p class="small muted"><?= e(__('These are required for your serving role. You cannot be rostered until they are signed.')) ?></p>
+<ul class="list-plain"><?php foreach ($todo as $d): ?><li><a href="<?= e(url('/library/' . $d['id'])) ?>"><strong><?= e($d['title']) ?></strong></a> <span class="small muted"><?= e(__('version %d', (int)$d['current_version'])) ?></span></li><?php endforeach; ?></ul></div><?php endif; ?>
+<form class="filters" method="get" action="<?= e(base_path() . '/index.php') ?>"><input type="hidden" name="r" value="/library">
+<label><?= e(__('Search')) ?><input type="search" name="q" value="<?= e($q) ?>"></label><label><?= e(__('Category')) ?><select name="category"><?= options(array_combine($categories, $categories), $cat, __('All')) ?></select></label><button class="btn"><?= e(__('Search')) ?></button></form>
+<div class="card table-wrap"><table><thead><tr><th><?= e(__('Document')) ?></th><th><?= e(__('Category')) ?></th><th><?= e(__('Updated')) ?></th><th><span class="sr-only"><?= e(__('Actions')) ?></span></th></tr></thead><tbody>
+<?php foreach ($docs as $d): ?><tr><td><a href="<?= e(url('/library/' . $d['id'])) ?>"><strong><?= e($d['title']) ?></strong></a><?= (int)$d['archived'] ? ' ' . badge('archived') : '' ?><div class="small muted"><?= e(mb_strimwidth((string)$d['description'], 0, 120, '…')) ?></div></td><td><?= e($d['category']) ?></td><td class="small"><?= e(fmt_date($d['version_date'])) ?> · v<?= (int)$d['current_version'] ?></td>
+<td><?php if ((int)$d['requires_ack']): ?><?= $d['signed'] ? badge('completed') : '<span class="badge badge-amber">' . e(__('Signature needed')) . '</span>' ?><?php endif; ?></td></tr><?php endforeach; ?>
+<?php if (!$docs): ?><tr><td colspan="4" class="empty"><?= e(__('No documents found.')) ?></td></tr><?php endif; ?>
+</tbody></table></div>

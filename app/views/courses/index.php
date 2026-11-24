@@ -1,0 +1,7 @@
+<div class="page-head"><div><h1><?= e(__('Courses & training')) ?></h1><p><?= e(__('Create, review and publish training. Assign courses to people or whole teams and track completion.')) ?></p></div>
+<?php if (can('courses.create')): ?><a class="btn btn-primary" href="<?= e(url('/courses/new')) ?>">+ <?= e(__('New course')) ?></a><?php endif; ?></div>
+<div class="tabs"><?php foreach (['' => __('All'), 'review' => __('Awaiting review'), 'draft' => __('Drafts'), 'published' => __('Published'), 'archived' => __('Archived')] as $k => $l): ?><a class="<?= $status === $k ? 'active' : '' ?>" href="<?= e(url('/courses', $k ? ['status' => $k] : [])) ?>"><?= e($l) ?></a><?php endforeach; ?></div>
+<div class="card table-wrap"><table><thead><tr><th><?= e(__('Course')) ?></th><th><?= e(__('Category')) ?></th><th><?= e(__('Lessons')) ?></th><th><?= e(__('Completed')) ?></th><th><?= e(__('Status')) ?></th></tr></thead><tbody>
+<?php foreach ($rows as $c): ?><tr><td><a href="<?= e(url('/courses/' . $c['id'])) ?>"><strong><?= e($c['title']) ?></strong></a><?= $c['validity_months'] ? ' <span class="small muted">' . e(__('renew every %d months', (int)$c['validity_months'])) . '</span>' : '' ?></td><td><?= e($c['category']) ?></td><td><?= (int)$c['lessons'] ?></td><td><?= (int)$c['completed'] ?>/<?= (int)$c['enrolled'] ?></td><td><?= badge($c['status']) ?></td></tr><?php endforeach; ?>
+<?php if (!$rows): ?><tr><td colspan="5" class="empty"><?= e(__('No courses here yet.')) ?></td></tr><?php endif; ?>
+</tbody></table></div>

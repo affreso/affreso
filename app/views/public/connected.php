@@ -1,0 +1,1 @@
+<div class="card" style="max-width:560px;margin:0 auto;text-align:center"><h1><?= e(__('Thank you, %s!', $first)) ?></h1><p><?= e(__('We have received your details. Someone from our welcome team will be in touch soon.')) ?></p><p><a class="btn" href="<?= e(url('/public/events')) ?>"><?= e(__("See what's on")) ?></a></p></div>

@@ -1,0 +1,7 @@
+<div class="page-head"><div><h1><?= e(__('Communications')) ?></h1><p><?= e(__('Email and SMS to your church, groups and teams. People who opt out are never included.')) ?></p></div>
+<div class="actions"><a class="btn" href="<?= e(url('/announcements')) ?>"><?= e(__('Announcements')) ?></a><a class="btn btn-primary" href="<?= e(url('/comms/new')) ?>">+ <?= e(__('New message')) ?></a></div></div>
+<?php if ($queued): ?><div class="callout"><?= e(__('%d message(s) waiting in the outgoing queue. They are sent by the scheduled task (cron).', $queued)) ?></div><?php endif; ?>
+<div class="card table-wrap"><table><thead><tr><th><?= e(__('Sent')) ?></th><th><?= e(__('Message')) ?></th><th><?= e(__('Audience')) ?></th><th><?= e(__('Delivery')) ?></th></tr></thead><tbody>
+<?php foreach ($rows as $m): ?><tr><td class="small nowrap"><?= e(fmt_datetime($m['created_at'])) ?></td><td><span class="badge badge-blue"><?= e(strtoupper($m['channel'])) ?></span> <a href="<?= e(url('/comms/' . $m['id'])) ?>"><?= e($m['subject'] ?: mb_substr($m['body'], 0, 60)) ?></a><div class="small muted"><?= e(person_name($m)) ?></div></td><td class="small"><?= e($m['audience']) ?></td><td class="small"><?= (int)$m['sent'] ?>/<?= (int)$m['recipient_count'] ?> <?= (int)$m['failed'] ? '<span class="badge badge-red">' . e(__('%d failed', (int)$m['failed'])) . '</span>' : '' ?></td></tr><?php endforeach; ?>
+<?php if (!$rows): ?><tr><td colspan="4" class="empty"><?= e(__('No messages sent yet.')) ?></td></tr><?php endif; ?>
+</tbody></table></div>

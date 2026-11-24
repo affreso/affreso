@@ -1,0 +1,8 @@
+<div class="page-head"><div><h1><?= e(__('Incident reports')) ?></h1><p><?= e($manage ? __('All reported incidents. Details are encrypted and every view is logged.') : __('Incidents you have reported.')) ?></p></div><a class="btn btn-primary" href="<?= e(url('/incidents/new')) ?>">+ <?= e(__('Report an incident')) ?></a></div>
+<div class="tabs"><a class="<?= $status === 'open' ? 'active' : '' ?>" href="<?= e(url('/incidents')) ?>"><?= e(__('Open')) ?></a><a class="<?= $status === 'all' ? 'active' : '' ?>" href="<?= e(url('/incidents', ['status' => 'all'])) ?>"><?= e(__('All')) ?></a></div>
+<div class="card table-wrap"><table><thead><tr><th><?= e(__('When')) ?></th><th><?= e(__('Incident')) ?></th><th><?= e(__('Severity')) ?></th><th><?= e(__('Status')) ?></th></tr></thead><tbody>
+<?php $sevBadge = ['low' => 'grey', 'medium' => 'amber', 'high' => 'red', 'critical' => 'red']; foreach ($rows as $i): ?>
+<tr><td class="small nowrap"><?= e(fmt_datetime($i['occurred_at'])) ?></td><td><a href="<?= e(url('/incidents/' . $i['id'])) ?>"><?= e($i['summary']) ?></a> <?= (int)$i['child_involved'] ? '<span class="badge badge-red">' . e(__('Child involved')) . '</span>' : '' ?><div class="small muted"><?= e(IncidentsController::types()[$i['incident_type']]) ?> · <?= e(person_name($i) ?: $i['email']) ?></div></td><td><span class="badge badge-<?= $sevBadge[$i['severity']] ?>"><?= e(__(ucfirst($i['severity']))) ?></span></td><td><?= badge($i['status'] === 'closed' ? 'closed' : ($i['status'] === 'reported' ? 'submitted' : 'in_progress')) ?></td></tr>
+<?php endforeach; ?>
+<?php if (!$rows): ?><tr><td colspan="4" class="empty"><?= e(__('No incidents.')) ?></td></tr><?php endif; ?>
+</tbody></table></div>

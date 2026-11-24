@@ -1,0 +1,2 @@
+<div class="page-head"><div><div class="breadcrumb"><a href="<?= e(url('/courses')) ?>"><?= e(__('Courses & training')) ?></a></div><h1><?= e(__('New course')) ?></h1></div></div>
+<form method="post" action="<?= e(url('/courses')) ?>" class="card form"><?= csrf_field() ?><?php partial('courses/fields', ['c' => [], 'courses' => $courses]); ?><button class="btn btn-primary"><?= e(__('Create draft')) ?></button></form>

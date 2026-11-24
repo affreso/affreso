@@ -1,0 +1,6 @@
+<div class="page-head"><div><h1><?= e(__('My groups')) ?></h1></div></div>
+<div class="grid-3"><?php foreach ($mine as $g): ?><a class="card stat" href="<?= e(url('/groups/' . $g['id'])) ?>"><span class="badge badge-blue"><?= e(GroupsController::types()[$g['group_type']]) ?></span><h2 class="h3"><?= e($g['name']) ?></h2><div class="small muted"><?= e($g['meeting_schedule']) ?> <?= e($g['location']) ?></div><?= $g['member_role'] !== 'member' ? '<span class="badge badge-gold">' . e(__(ucfirst($g['member_role']))) . '</span>' : '' ?></a><?php endforeach; ?></div>
+<?php if (!$mine): ?><div class="card"><p class="empty"><?= e(__('You are not in any groups yet.')) ?></p></div><?php endif; ?>
+<?php if ($open): ?><h2><?= e(__('Groups you can join')) ?></h2><div class="grid-3"><?php foreach ($open as $g): ?>
+<div class="card"><h2 class="h3"><?= e($g['name']) ?></h2><p class="small muted"><?= e($g['meeting_schedule']) ?> <?= e($g['location']) ?></p><p class="small"><?= e($g['description']) ?></p><form method="post" action="<?= e(url('/me/groups/' . $g['id'] . '/join')) ?>"><?= csrf_field() ?><button class="btn btn-sm btn-primary"><?= e(__('Join')) ?></button></form></div>
+<?php endforeach; ?></div><?php endif; ?>

@@ -1,0 +1,3 @@
+<div class="card" style="max-width:560px;margin:0 auto;text-align:center"><h1><?= e(__('Certificate verification')) ?></h1>
+<?php if ($e): ?><p><?= badge('verified') ?></p><p><?= e(__('%s completed "%s" on %s.', trim($e['first_name'] . ' ' . $e['last_name']), $e['title'], fmt_date($e['completed_at']))) ?></p><?php if ($e['expires_at']): ?><p class="<?= $e['expires_at'] < date('Y-m-d') ? 'badge badge-red' : 'muted' ?>"><?= e(__('Valid until %s', fmt_date($e['expires_at']))) ?></p><?php endif; ?>
+<?php else: ?><p><?= badge('failed') ?> <?= e(__('No completed course matches this code.')) ?></p><?php endif; ?></div>

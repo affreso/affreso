@@ -1,0 +1,1 @@
+<div class="card" style="max-width:560px;margin:0 auto;text-align:center"><h1><?= e(__('Thank you for your generosity')) ?></h1><p><?= e(__('Your gift has been received. A receipt will be emailed to you shortly.')) ?></p><p><a class="btn" href="<?= e(url('/public/events')) ?>"><?= e(__("See what's on")) ?></a></p></div>
