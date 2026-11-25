@@ -28,5 +28,6 @@
   <?= $content ?>
 </main>
 <footer class="footer"><?= e(setting('church_name', '')) ?> · <a href="<?= e(url('/privacy')) ?>"><?= e(__('Privacy policy')) ?></a> · Powered by Affreso</footer>
+<script src="<?= e(asset('js/app.js')) ?>"></script>
 </body>
 </html>
